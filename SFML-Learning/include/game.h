@@ -11,8 +11,8 @@ const float FPS = 60.0f;
 
 sprite_t skySprite;
 sprite_t bgSprite;
-sprite_t heroSprite;
 
+Hero hero;
 sf::Vector2f playerPosition;
 bool playerMoving;
 float playerVelocity;

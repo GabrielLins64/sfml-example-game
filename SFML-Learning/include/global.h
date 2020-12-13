@@ -4,6 +4,9 @@
 #include <SFML/Graphics.hpp>
 #include <graphics.h>
 
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 768
+
 extern sf::Vector2f viewSize;
 extern sf::VideoMode vm;
 extern sf::RenderWindow window;
@@ -13,7 +16,6 @@ extern bool playerMoving;
 
 extern sprite_t skySprite;
 extern sprite_t bgSprite;
-extern sprite_t heroSprite;
 
 extern void game_loop();
 

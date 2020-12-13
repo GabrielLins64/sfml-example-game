@@ -2,12 +2,12 @@
 
 void update(float delta)
 {
-    if (playerMoving) heroSprite.sprite.move(playerVelocity * delta, 0);
+    hero.update(delta);
 }
 
 void init()
 {
-    viewSize = sf::Vector2f(1024, 768);
+    viewSize = sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT);
     vm = sf::VideoMode(viewSize.x, viewSize.y);
     window.create(vm, 
                 "Hello SFMLGame!!!", 
@@ -19,17 +19,15 @@ void init()
 
     loadTexture(skySprite, "assets/graphics/sky.png");
     loadTexture(bgSprite, "assets/graphics/bg.png");
-    loadTexture(heroSprite, "assets/graphics/hero.png");
 
-    heroSprite.sprite.setPosition(sf::Vector2f(viewSize.x/2, viewSize.y/2));
-    heroSprite.sprite.setOrigin(heroSprite.texture.getSize().x/2, heroSprite.texture.getSize().y/2);
+    hero.init("assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
 }
 
 void draw()
 {
     window.draw(skySprite.sprite);
     window.draw(bgSprite.sprite);
-    window.draw(heroSprite.sprite);
+    window.draw(hero.getSprite());
 }
 
 void game_loop()
