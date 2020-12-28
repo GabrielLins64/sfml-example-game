@@ -3,6 +3,29 @@
 void update(float delta)
 {
     hero.update(delta);
+    currentTime += delta;
+    if (currentTime >= prevTime + 1.125f) {
+        spawnEnemy();
+        prevTime = currentTime;
+    }
+    // Cleaning enemies that move beyond the left of the screen
+    for(int i = 0; i < enemies.size(); i++) {
+        Enemy *enemy = enemies[i];
+        enemy->update(delta);
+        if(enemy->getSprite().getPosition().x < 0) {
+            enemies.erase(enemies.begin() + i);
+            delete(enemy);
+        }
+    }
+    // Cleaning rockets that move beyond the right of the screen
+    for(int i = 0; i < rockets.size(); i++) {
+        Rocket* rocket = rockets[i];
+        rocket->update(delta);
+        if(rocket->getSprite().getPosition().x > viewSize.x) {
+            rockets.erase(rockets.begin() + i);
+            delete(rocket);
+        }
+    }
 }
 
 void init()
@@ -21,6 +44,8 @@ void init()
     loadTexture(bgSprite, "assets/graphics/bg.png");
 
     hero.init("assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
+
+    srand((int)time(0));
 }
 
 void draw()
@@ -28,6 +53,14 @@ void draw()
     window.draw(skySprite.sprite);
     window.draw(bgSprite.sprite);
     window.draw(hero.getSprite());
+
+    for(Enemy *enemy : enemies) {
+        window.draw(enemy->getSprite());
+    }
+
+    for(Rocket* rocket : rockets) {
+        window.draw(rocket->getSprite());
+    }
 }
 
 void game_loop()
@@ -39,12 +72,48 @@ void game_loop()
 
     while(window.isOpen()) 
     {
-        sf::Event event;
-        updateInput();
+        updateInput(event);
         delta = clock.restart();
         update(delta.asSeconds());
         window.clear(sf::Color::Blue);
         draw();
         window.display();
     }
+}
+
+void spawnEnemy()
+{
+    int randLoc = rand() % 3;
+    sf::Vector2f enemyPos;
+    float speed;
+    switch(randLoc) {
+        case 0:
+            enemyPos = sf::Vector2f(viewSize.x, viewSize.y * 0.75f);
+            speed = -400;
+            break;
+        case 1:
+            enemyPos = sf::Vector2f(viewSize.x, viewSize.y * 0.60f);
+            speed = -550;
+            break;
+        case 2:
+            enemyPos = sf::Vector2f(viewSize.x, viewSize.y * 0.40f);
+            speed = -650;
+            break;
+        default:
+            printf("Incorrect y value\n");
+            return;
+    }
+
+    Enemy* enemy = new Enemy();
+    enemy->init("assets/graphics/enemy.png", enemyPos, speed);
+    
+    enemies.push_back(enemy);
+}
+
+void shoot()
+{
+    Rocket* rocket = new Rocket();
+    rocket->init("assets/graphics/rocket.png", hero.getSprite().getPosition(), 400.0f);
+
+    rockets.push_back(rocket);
 }

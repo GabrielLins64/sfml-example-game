@@ -3,6 +3,7 @@
 
 #include <global.h>
 
+/** Game hero class */
 class Hero 
 {
     private:
@@ -19,9 +20,17 @@ class Hero
         Hero();
         ~Hero();
 
+        /**
+         * @brief Initialization method
+         * 
+         * @param textureName Relative path to the hero texture image
+         * @param position Hero initial position
+         * @param mass Hero mass. Affects its jumps
+         */
         void init(const char* textureName, sf::Vector2f position, float mass);
         void update(float dt);
         void jump(float velocity);
+
         sf::Sprite getSprite();
 };
 

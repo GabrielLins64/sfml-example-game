@@ -1,8 +1,7 @@
 #include <io.h>
 
-void updateInput()
+void updateInput(sf::Event event)
 {
-    sf::Event event;
     while(window.pollEvent(event))
     {
         // if (event.type == sf::Event::KeyPressed) 
@@ -17,6 +16,7 @@ void updateInput()
         if (event.type == sf::Event::KeyPressed)
         {
             if(event.key.code == sf::Keyboard::Up) hero.jump(750.0f);
+            if(event.key.code == sf::Keyboard::Space) shoot();
         } 
         
         if (event.key.code == sf::Keyboard::Escape || 

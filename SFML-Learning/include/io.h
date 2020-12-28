@@ -5,6 +5,8 @@
 #include <hero.h>
 
 extern Hero hero;
-void updateInput();
+extern void shoot();
+
+void updateInput(sf::Event event);
 
 #endif
