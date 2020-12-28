@@ -11,9 +11,6 @@ extern sf::Vector2f viewSize;
 extern sf::VideoMode vm;
 extern sf::RenderWindow window;
 
-extern sf::Vector2f playerPosition;
-extern bool playerMoving;
-
 extern sprite_t skySprite;
 extern sprite_t bgSprite;
 

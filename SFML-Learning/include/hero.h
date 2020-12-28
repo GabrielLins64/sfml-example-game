@@ -10,7 +10,7 @@ class Hero
         sprite_t m_sprite;
         sf::Vector2f m_position;
 
-        int jumpCount = 0;
+        int jumpCount = 2;
         float m_mass;
         float m_velocity;
         const float m_gravity = 9.80f;

@@ -6,6 +6,22 @@ void loadTexture(sprite_t &sprite, const char* path)
     sprite.sprite.setTexture(sprite.texture);
 }
 
+void loadText(text_t &text, const char* fontPath, const char* string, int charSize, sf::Color color)
+{
+    text.font.loadFromFile(fontPath);
+    text.text.setFont(text.font);
+    text.text.setString(string);
+    text.text.setCharacterSize(charSize);
+    text.text.setFillColor(color);
+}
+
+void moveText(text_t &text, sf::Vector2f position)
+{
+    sf::FloatRect bounds = text.text.getGlobalBounds();
+    text.text.setOrigin(bounds.width / 2, bounds.height / 2);
+    text.text.setPosition(position);
+}
+
 sf::RectangleShape drawRect(sf::Vector2f viewSize)
 {
     sf::RectangleShape rect(sf::Vector2f(500.0f, 300.0f));

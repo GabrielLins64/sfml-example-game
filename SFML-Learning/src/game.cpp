@@ -16,6 +16,7 @@ void update(float delta)
         if (enemy->getSprite().getPosition().x < 0) {
             enemies.erase(enemies.begin() + i);
             delete(enemy);
+            gameover = true;
         }
     }
 
@@ -39,6 +40,7 @@ void update(float delta)
                 enemies.erase(enemies.begin() + j);
                 delete(rocket);
                 delete(enemy);
+                to_score();
             }
         }
     }
@@ -53,11 +55,17 @@ void init()
                 sf::Style::Default);
     window.setFramerateLimit(FPS);
 
-    playerVelocity = 200.0f;
-    playerMoving = false;
-
     loadTexture(skySprite, "assets/graphics/sky.png");
     loadTexture(bgSprite, "assets/graphics/bg.png");
+    loadText(headingText, "assets/fonts/SnackerComic.ttf", "Tiny Bazooka", 84, sf::Color::Red);
+    loadText(scoreText, "assets/fonts/arial.ttf", "Score: 0", 45, sf::Color::Yellow);
+    loadText(tutorialText, "assets/fonts/arial.ttf", 
+                           "Press \"Space\" to fire, \"Enter\" to start and \"Up arrow\" to jump.\nDon't let your enemies reach the left of the screen.\nYou can also double jump by pressing for jump twice!", 
+                           35, sf::Color(0, 191, 255, 255));
+
+    moveText(headingText, sf::Vector2f(viewSize.x * 0.5f, viewSize.y * 0.10f));
+    moveText(scoreText, sf::Vector2f(viewSize.x * 0.16f, viewSize.y * 0.12f));
+    moveText(tutorialText, sf::Vector2f(viewSize.x * 0.5f, viewSize.y * 0.30f));
 
     hero.init("assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
 
@@ -69,6 +77,7 @@ void draw()
     window.draw(skySprite.sprite);
     window.draw(bgSprite.sprite);
     window.draw(hero.getSprite());
+    window.draw(scoreText.text);
 
     for(Enemy *enemy : enemies) {
         window.draw(enemy->getSprite());
@@ -88,11 +97,17 @@ void game_loop()
 
     while(window.isOpen()) 
     {
-        updateInput(event);
         delta = clock.restart();
-        update(delta.asSeconds());
         window.clear(sf::Color::Blue);
         draw();
+        if (!gameover) {
+            updateInput(event);
+            update(delta.asSeconds());
+        } else {
+            window.draw(headingText.text);
+            window.draw(tutorialText.text);
+            updateInputGameOver(event);
+        }
         window.display();
     }
 }
@@ -142,4 +157,30 @@ bool checkCollision(sf::Sprite sprite1, sf::Sprite sprite2)
     if (shape1.intersects(shape2)) return true;
 
     return false;    
+}
+
+void quit()
+{
+    reset();
+    window.close();
+}
+
+void reset() {
+    score = 0;
+    currentTime = 0.0f;
+    prevTime = 0.0;
+    scoreText.text.setString("Score: 0");
+
+    for (Enemy *enemy : enemies) delete(enemy);
+    for (Rocket *rocket : rockets) delete(rocket);
+    enemies.clear();
+    rockets.clear();
+}
+
+inline void to_score()
+{
+    score++;
+    std::string finalScore = "Score: " + std::to_string(score);
+    scoreText.text.setString(finalScore);
+    moveText(scoreText, sf::Vector2f(viewSize.x * 0.15f, viewSize.y * 0.10f));
 }
