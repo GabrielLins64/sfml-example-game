@@ -31,5 +31,6 @@ void draw();
 void game_loop();
 void spawnEnemy();
 void shoot();
+bool checkCollision(sf::Sprite sprite1, sf::Sprite sprite2);
 
 #endif

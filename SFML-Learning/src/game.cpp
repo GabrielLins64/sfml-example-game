@@ -8,22 +8,38 @@ void update(float delta)
         spawnEnemy();
         prevTime = currentTime;
     }
-    // Cleaning enemies that move beyond the left of the screen
+
+    // Updating and cleaning enemies
     for(int i = 0; i < enemies.size(); i++) {
         Enemy *enemy = enemies[i];
         enemy->update(delta);
-        if(enemy->getSprite().getPosition().x < 0) {
+        if (enemy->getSprite().getPosition().x < 0) {
             enemies.erase(enemies.begin() + i);
             delete(enemy);
         }
     }
-    // Cleaning rockets that move beyond the right of the screen
-    for(int i = 0; i < rockets.size(); i++) {
+
+    // Updating and cleaning rockets
+    for (int i = 0; i < rockets.size(); i++) {
         Rocket* rocket = rockets[i];
         rocket->update(delta);
-        if(rocket->getSprite().getPosition().x > viewSize.x) {
+        if (rocket->getSprite().getPosition().x > viewSize.x) {
             rockets.erase(rockets.begin() + i);
             delete(rocket);
+        }
+    }
+
+    // Check collision between Rocket and Enemies
+    for (int i = 0; i < rockets.size(); i++) {
+        for (int j = 0; j < enemies.size(); j++) {
+            Rocket* rocket = rockets[i];
+            Enemy* enemy = enemies[j];
+            if (checkCollision(rocket->getSprite(), enemy->getSprite())) {
+                rockets.erase(rockets.begin() + i);
+                enemies.erase(enemies.begin() + j);
+                delete(rocket);
+                delete(enemy);
+            }
         }
     }
 }
@@ -106,7 +122,7 @@ void spawnEnemy()
 
     Enemy* enemy = new Enemy();
     enemy->init("assets/graphics/enemy.png", enemyPos, speed);
-    
+
     enemies.push_back(enemy);
 }
 
@@ -116,4 +132,14 @@ void shoot()
     rocket->init("assets/graphics/rocket.png", hero.getSprite().getPosition(), 400.0f);
 
     rockets.push_back(rocket);
+}
+
+bool checkCollision(sf::Sprite sprite1, sf::Sprite sprite2)
+{
+    sf::FloatRect shape1 = sprite1.getGlobalBounds();
+    sf::FloatRect shape2 = sprite2.getGlobalBounds();
+
+    if (shape1.intersects(shape2)) return true;
+
+    return false;    
 }
