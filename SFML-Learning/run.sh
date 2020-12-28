@@ -16,5 +16,5 @@ rm build/*
 SFML_PATH="lib/SFML-2.5.1"
 g++ -c -Iinclude -I"${SFML_PATH}/include" src/*.cpp && \
 mv *.o build/
-g++ build/*.o -o "bin/$1" -L"${SFML_PATH}/lib" -lsfml-graphics -lsfml-window -lsfml-system && \
+g++ build/*.o -o "bin/$1" -L"${SFML_PATH}/lib" -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio && \
 export LD_LIBRARY_PATH="${SFML_PATH}/lib" && ./bin/$1

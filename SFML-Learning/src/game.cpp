@@ -40,6 +40,7 @@ void update(float delta)
                 enemies.erase(enemies.begin() + j);
                 delete(rocket);
                 delete(enemy);
+                hitSound.play();
                 to_score();
             }
         }
@@ -68,6 +69,12 @@ void init()
     moveText(tutorialText, sf::Vector2f(viewSize.x * 0.5f, viewSize.y * 0.30f));
 
     hero.init("assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
+
+    bgMusic.openFromFile("assets/audio/bgMusic.ogg");
+    bgMusic.setVolume(20);
+    hitBuffer.loadFromFile("assets/audio/hit.ogg");
+    fireBuffer.loadFromFile("assets/audio/fire.ogg");
+    bgMusic.play();
 
     srand((int)time(0));
 }
@@ -145,8 +152,8 @@ void shoot()
 {
     Rocket* rocket = new Rocket();
     rocket->init("assets/graphics/rocket.png", hero.getSprite().getPosition(), 400.0f);
-
     rockets.push_back(rocket);
+    fireSound.play();
 }
 
 bool checkCollision(sf::Sprite sprite1, sf::Sprite sprite2)

@@ -12,6 +12,12 @@ sf::VideoMode vm;
 sf::RenderWindow window;
 const float FPS = 60.0f;
 
+sf::Music bgMusic;
+sf::SoundBuffer fireBuffer;
+sf::SoundBuffer hitBuffer;
+sf::Sound fireSound(fireBuffer);
+sf::Sound hitSound(hitBuffer);
+
 sprite_t skySprite;
 sprite_t bgSprite;
 text_t headingText;

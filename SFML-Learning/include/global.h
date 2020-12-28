@@ -2,6 +2,7 @@
 #define GLOBAL_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <graphics.h>
 
 #define WINDOW_WIDTH 1024
