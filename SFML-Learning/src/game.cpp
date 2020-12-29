@@ -68,7 +68,7 @@ void init()
     moveText(scoreText, sf::Vector2f(viewSize.x * 0.16f, viewSize.y * 0.12f));
     moveText(tutorialText, sf::Vector2f(viewSize.x * 0.5f, viewSize.y * 0.30f));
 
-    hero.init("assets/graphics/hero.png", sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
+    hero.init("assets/graphics/heroAnim.png", 4, 1.0f, sf::Vector2f(viewSize.x * 0.25f, viewSize.y * 0.5f), 200);
 
     bgMusic.openFromFile("assets/audio/bgMusic.ogg");
     bgMusic.setVolume(20);
