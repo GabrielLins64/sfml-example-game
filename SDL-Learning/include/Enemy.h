@@ -1,16 +1,17 @@
 #ifndef __Enemy__
 #define __Enemy__
 
-#include <GameObject.h>
+#include <SDLGameObject.h>
 
-class Enemy : public GameObject
+class Enemy : public SDLGameObject
 {
 public:
 
-    void load(int x, int y, int width, int height, std::string textureID);
-    void draw(SDL_Renderer* renderer);
-    void update();
-    void clean();
+    Enemy(const LoaderParams* params);
+
+    virtual void draw(SDL_Renderer* renderer);
+    virtual void update();
+    virtual void clean();
 };
 
 #endif /* defined(__Enemy__) */

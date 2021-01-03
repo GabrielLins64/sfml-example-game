@@ -2,8 +2,6 @@
 #define __Game__
 
 #include <SDL2/SDL.h>
-#include <TextureManager.h>
-#include <GameObject.h>
 #include <Player.h>
 #include <Enemy.h>
 #include <iostream>
@@ -13,8 +11,15 @@ class Game
 {
 public:
 
-    Game() {}
-    ~Game() {}
+    static Game* Instance()
+    {
+        if(instance == 0)
+        {
+            instance = new Game();
+            return instance;
+        }
+        return instance;
+    }
 
     /**
      * @brief Game class initializer
@@ -25,7 +30,7 @@ public:
      * @param width Window starting width
      * @param height Window starting height
      * @param fullscreen If it's fullscreen or not.
-     * @return true If was able to instantiate the Game object
+     * @return true If was able to instantiate the Game class
      * @return false If something went wrong
      */
     bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
@@ -40,19 +45,21 @@ public:
 
     bool running();
 
+    SDL_Renderer* getRenderer() const;
+
 private:
+
+    Game() {}
+    ~Game() {}
+    static Game* instance;
 
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool _running;
 
-    int currentFrame;
-
-    GameObject* go;
-    GameObject* player;
-    GameObject* enemy;
-
-    std::vector<GameObject*> gameObjects;
+    std::vector<SDLGameObject*> gameObjects;
 };
+
+typedef Game TheGame;
 
 #endif /* defined(__Game__) */
