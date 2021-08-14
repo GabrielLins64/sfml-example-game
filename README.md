@@ -1,16 +1,54 @@
-# Game-dev Learning repository
+<h1>SFML Example Game</h1>
 
-This repo contains examples and small games from graphics and games open source APIs and Engines in C++.
+This repo contains a small game example in C++, using the [SFML library](https://www.sfml-dev.org/).
 
-## Compilation and running
+---
 
-Just run the shell scripts, or use the cmake for compiling and running the projects.
+<h2>Index</h2>
+
+- [Dependencies](#dependencies)
+- [Build](#build)
+- [Execute](#execute)
+- [Notes](#notes)
+- [References](#references)
+
+---
+
+## Dependencies
+
+- [SFML](https://www.sfml-dev.org/)
+
+- [g++](https://gcc.gnu.org/)
+
+## Build
+
+In order to compile the game, simply run the shell script `build.sh` by doing:
+
+```
+$ chmod +x build.sh
+$ ./build.sh
+```
+
+<small>\*For manual compilation in g++, follow the commands in the shell script.</small>
+
+## Execute
+
+The same process for running the game:
+
+```
+$ chmod +x run.sh
+$ ./run.sh
+```
+
+Or, simply:
+
+`$ ./bin/game`
 
 ## Notes
 
 The third-party libs (.h/.hpp and .so/.a/.dll) aren't uploaded along with the code for size purposes. They're included in the "lib" directory with the other project directories (bin, build, src, etc.) and should be installed individually in the cloner system. The shell or cmake scripts in all tutorials shows the full paths for the libs.
 
-The assets used by all tutorials (*-Learning directories) aren't owned by the author of this repository and, if used from here, need to be referenced. References for the tutorials and the assets are given below.
+The assets used by all tutorials (\*-Learning directories) aren't owned by the author of this repository and, if used from here, need to be referenced. References for the tutorials and the assets are given below.
 
 ## References
 
@@ -18,7 +56,4 @@ The assets used by all tutorials (*-Learning directories) aren't owned by the au
 
 [2] https://github.com/PacktPublishing/CPP-Game-Development-By-Example
 
-[3] Mitchell, Shaun. SDL Game Development: Discover how to leverage the power of SDL 2.0 to
-create awesome games in C++. Packt Publishing, 2013.
-
-[4] http://www.widgetworx.com/widgetworx/portfolio/spritelib.html
+[3] http://www.widgetworx.com/widgetworx/portfolio/spritelib.html
